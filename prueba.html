@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba</title>
+</head>
+<body>
+
+    <script>
+        /*
+        class Producto {
+        constructor(titulo, autor, precio) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.precio = precio;
+        }
+        }
+
+        class Libro extends Producto {
+        constructor(titulo, autor, precio, formato) {
+        super(titulo, autor, precio);
+        this._formato = formato;
+        }
+
+        get formato() {
+            return "Formato del disco: " + this._formato;
+        }
+        set formato(formato_nuevo) {
+            this._formato = formato_nuevo;
+        }
+        static metodoEstatico() {
+            console.log("Esto es un metodo estatico");
+        }
+        
+        }
+        Libro.metodoEstatico();
+        */
+
+    </script>
+
+    <script>
+
+        //CLASES
+
+    class Producto {
+        constructor(titulo, autor, precio) {
+        this._titulo = titulo;
+        this._autor = autor;
+        this._precio = precio;
+    }
+    }
+
+    Producto.prototype.mostrar = function() {
+        console.log("Soy el producto: " + this._titulo);
+    }
+
+    class Disco extends Producto {
+        constructor(titulo, autor, precio, formato) {
+            super(titulo, autor, precio);
+            this._formato = formato;
+        }
+
+        get formato() {
+        return "Formato del disco: " + this._formato;
+        }
+    
+        set formato(formato_nuevo) {
+            this._formato = formato_nuevo;
+        }
+    
+        mostrar() {
+            console.log("Metodo sobreescrito");
+        }
+    }
+
+    class Libro extends Producto {
+        constructor(titulo, autor, precio) {
+            super(titulo, autor, precio);
+            var _paginaActual = 0;
+        }
+        
+        marcador(pagina) {
+            _paginaActual = pagina;
+        }
+        
+        pasarPagina() {
+            _paginaActual++;
+        }
+        
+        obtenerPagina() {
+            console.log("Estoy en la página " + _paginaActual);
+        }
+    }
+
+    var libro1 = new Libro("Dublinés", "Alfonso Zapico", 18);
+    var libro2 = new Libro("El arte de volar", "Antonio Altarriba y Kim", 20.90);
+    var disco1 = new Disco("Próxima estación: Esperanza", "Manu Chao", 15, "CD");
+
+    libro1.mostrar();
+    disco1.mostrar();
+    console.log(disco1.formato);
+    </script>
+
+
+
+
+
+    <script>
+        // TEMPLATE STRINGS
+        let nombre = "Aitor Tilla";
+        console.log(`Mi nombre es ${nombre}`); // inclusión de una variable en el string
+        console.log(`Mi edad es ${27+5}`); // se pueden incluir expresiones
+        fun = function() { return "resultado de una funcion"; }
+        console.log(`El resultado de fun es: ${fun()}`);
+        let stringMultiLinea = `primera linea
+        segunda linea
+        tercera linea`;
+        console.log(stringMultiLinea);
+    </script>
+
+
+
+
+
+
+    <script>
+        //FUNCIONES
+        /* EJEMPLO 1 */
+        // Sin funcion flecha
+        fun = function(a,b) {	return a+b; } 
+        console.log(fun(1,2));
+        // Con funcion flecha
+        fun = (a,b) => a+b; // return implicito
+        console.log(fun(1,2));
+
+        /* EJEMPLO 2: varias instrucciones */
+        // Sin funcion flecha
+        fun = function(a) {	a++; return a+a; } 
+        console.log(fun(1));
+        // Con funcion flecha
+        fun = a => { a++; return a+a; }; // necesitamos usar return al tener mas de 1 instruccion
+        // hemos eliminado los parentesis de los argumentos ya que solo tenemos 1 (a)
+        console.log(fun(1));
+
+        /* EJEMPLO 3: sin argumentos */
+        // Sin funcion flecha
+        fun = function() { return 1+2; } 
+        console.log(fun());
+        // Con funcion flecha
+        fun = () => 1+2;
+        console.log(fun());
+
+
+    </script>
+    
+</body>
+</html>
