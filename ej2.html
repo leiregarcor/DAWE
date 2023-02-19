@@ -7,7 +7,9 @@
     <title>Ejercicio 2</title>
 </head>
 <body>
-    <script>/*
+    <script>
+    /* enunciado:
+
         function Locutor(nombre, verbo) {
             this.nombre = nombre
             this.verbo = verbo || "dice" // en js pasa que no te dará ningún problema si solo le entra un parametro, verbo se quedaria con "dice" gracias al or "||"
@@ -41,17 +43,22 @@
         }
     }
 
-    class Feriante{
+    class Feriante extends Locutor{
         constructor(nombre) {
             super(nombre, "grita");
         }
 
         dice(text){ //metodo sovreescrito
-            console.log(this.nombre + " " + this.verbo + " '" + text.toUpperCase() + "'");
+            super.dice(text.toUpperCase());
+            //console.log(this.nombre + " " + this.verbo + " '" + text.toUpperCase() + "'");
             
         }
     }
 
+
+    //let f =  
+    new Feriante("Mr. Crecepelo").dice("Me lo quitan de las manos");
+    
     </script>
 </body>
 </html>
