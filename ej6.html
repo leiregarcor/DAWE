@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 5</title>
+    <title>Ejercicio 6</title>
 </head>
 <body>
     <script>
-        const almacen = [
+
+            const almacen = [
             {
                 tipo: "lavadora", 
                 valor: 5000
@@ -29,16 +30,18 @@
                 valor: 77
             }
         ];
-        let totalValorLavadoras =  almacen
-        .filter(function (lavadora) {
-            return lavadora.tipo ==  "lavadora";
-        })
-        .reduce(function (acc, lavadora) {
-            return acc + lavadora.valor;
-        }, 0);
 
+        /*
+        almacen.forEach(
+            function(item) {
+                console.log(item.valor);
+            }
+        );
+        */
 
-        console.log (totalValorLavadoras); // se espera 5727
+        almacen.forEach(
+            (item) =>  console.log(item.valor)
+        );
     </script>
 </body>
 </html>

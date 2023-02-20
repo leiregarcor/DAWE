@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 5</title>
+    <title>Ejercicio 7</title>
 </head>
 <body>
     <script>
@@ -29,13 +29,33 @@
                 valor: 77
             }
         ];
+
+        /*
         let totalValorLavadoras =  almacen
-        .filter(function (lavadora) {
-            return lavadora.tipo ==  "lavadora";
+        .filter(
+            function (lavadora) {
+                return lavadora.tipo ==  "lavadora";
         })
-        .reduce(function (acc, lavadora) {
-            return acc + lavadora.valor;
+        .reduce(
+            function (acc, lavadora) {
+                return acc + lavadora.valor;
         }, 0);
+
+
+        almacen.forEach(
+            (item) =>  console.log(item.valor)
+        );
+        */
+       
+        // Ejercicio 5 refactorizado para usar funciones flecha :)
+
+        let totalValorLavadoras =  almacen
+        .filter(
+            (item)=> item.tipo ==  "lavadora"
+        )
+        .reduce(
+            (acc, lavadora) => acc + lavadora.valor
+        , 0);
 
 
         console.log (totalValorLavadoras); // se espera 5727
