@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"> 
+
+		<script type="module">
+			import {tienda} from './oop/tienda.js';
+			window.onload = () => {
+				let imprimirListado = document.getElementById('listado');
+				tienda.forEach ( producto => {
+					let capa = document.createElement('div');
+					capa.innerHTML = producto.mostrar();
+					imprimirListado.appendChild(capa);
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<div id="listado">
+
+		</div>
+	</body>
+</html>
