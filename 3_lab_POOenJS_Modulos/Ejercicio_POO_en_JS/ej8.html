@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 8</title>
+</head>
+<body>
+    <script>
+        /*
+        function ArrayOrdenado(comparador) {
+            this.comparador = comparador //una función comparador que toma dos parámetros (a,b) y devuelve un número entero negativo si a es menor que b (según el comparador), 0 si son iguales, y un número entero positivo si b es menor que a
+            this.contenido = []
+        }
+        ArrayOrdenado.prototype.findPos = function(elt) { // devuelve el índice del primer elemento del array para el que la función comparardor < 0 devuelve true
+            for (var i = 0; i < this.contenido.length; i++) {
+                if (   this.comparador (elt, this.contenido [i])   <    0) break
+            }
+            return i
+        }
+        ArrayOrdenado.prototype.insert = function(elt) {
+            this.contenido.splice(this.findPos(elt), 0, elt) // adds and/or removes array elements. -> array.splice(index, howmany, item1, ....., itemX)
+        }
+        var ordenado = new ArrayOrdenado(function(a, b) { return a - b });
+        ordenado.insert(5); // [5]
+        ordenado.insert(1); // [1,5]
+        ordenado.insert(2); // [1,2,5] etc
+        ordenado.insert(4);
+        ordenado.insert(3);
+        console.log("array:", ordenado.contenido);
+        // array: [1, 2, 3, 4, 5]
+
+
+        //// ejemplo findIndex
+        const array1 = [5, 12, 8, 130, 44];
+        const isLargeNumber = (element) => element > 13;  //funcion que devuelve true si  el elemento es > 13
+        console.log(array1.findIndex(isLargeNumber));   // Expected output: 3
+        
+        /// findIndex
+        //El método findIndex() ejecuta la función de callback una vez por cada índice del array hasta que encuentre uno donde callback devuelva un valor verdadero
+        // Si dicho elemento es encontrado, findIndex() inmediatamente devuelve el índice del elemento. 
+        //Si la función callback nunca devuelve un valor verdadero (o el tamaño del array es 0), findIndex devuelve -1
+
+
+        */
+
+        // convertir a ECMAScript6+ , refactorizar el bucle for para usar el metodo findIndex , usa funciones arrow
+
+        class ArrayOrdenado{
+            constructor(comparador){
+                this.comparador = comparador //una función comparador que toma dos parámetros (a,b) y devuelve un número entero negativo si a es menor que b (según el comparador), 0 si son iguales, y un número entero positivo si b es menor que a
+                this.contenido = []
+            }
+
+            findPos(elt){
+                // queremos iterar el array y comparar cada valor con el nuevo_valor que queremos añadir al array, 
+                // si el valor del array es mayor que el nuevo_valor, devolveremos el index del valor del array,
+                // si el array esta vacio o si no hay ningun elemento mayor que el nuevo_valor, devolveremos array.lenght
+                var index = this.contenido.findIndex( (valor) => this.comparador(elt, valor) < 0 ); 
+                // ahora hay que comprobar los casos criticos que son: el primer caso, es decir, cuando el array está vacio y el caso en el que no devuelve un valor true, en ambos casos findIndex devuelve -1, por lo que en ambos casos pondremos esos valores al final del array
+                if (index == -1) {
+                    index = this.contenido.length;
+                }                
+                return index;                
+            }
+            
+            insert(elt){
+                this.contenido.splice(this.findPos(elt), 0, elt) // adds and/or removes array elements. -> array.splice(index, howmany, item1, ....., itemX)
+            }
+        }
+
+        var ordenado = new ArrayOrdenado((a, b) => a-b);
+        ordenado.insert(5); // [5]
+        ordenado.insert(1); // [1,5]
+        ordenado.insert(2); // [1,2,5] etc
+        ordenado.insert(4);
+        ordenado.insert(3);
+        console.log("array:", ordenado.contenido);
+        // array: [1, 2, 3, 4, 5]
+
+    </script>
+</body>
+</html>

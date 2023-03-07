@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5</title>
+</head>
+<body>
+    <script>
+        const almacen = [
+            {
+                tipo: "lavadora", 
+                valor: 5000
+            },
+            {
+                tipo: "lavadora", 
+                valor: 650
+            },
+            {   tipo: "vaso", 
+                valor: 10
+            },
+            {
+                tipo: "armario", 
+                valor: 1200
+            },
+            {
+                tipo: "lavadora", 
+                valor: 77
+            }
+        ];
+        let totalValorLavadoras =  almacen
+        .filter(function (lavadora) {
+            return lavadora.tipo ==  "lavadora";
+        })
+        .reduce(function (acc, lavadora) {
+            return acc + lavadora.valor;
+        }, 0);
+
+
+        console.log (totalValorLavadoras); // se espera 5727
+    </script>
+</body>
+</html>

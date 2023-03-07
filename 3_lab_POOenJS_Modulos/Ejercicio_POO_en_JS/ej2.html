@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <script>
+    /* enunciado:
+
+        function Locutor(nombre, verbo) {
+            this.nombre = nombre
+            this.verbo = verbo || "dice" // en js pasa que no te dará ningún problema si solo le entra un parametro, verbo se quedaria con "dice" gracias al or "||"
+        }
+
+        Locutor.prototype.dice = function(text) {
+            console.log(this.nombre + " " + this.verbo + " '" + text + "'")
+        }
+
+        function Feriante(nombre) {
+            Locutor.call(this, nombre, "grita")
+        }
+
+        Feriante.prototype = Object.create(Locutor.prototype)
+        Feriante.prototype.dice = function(text) {
+            Locutor.prototype.dice.call(this, text.toUpperCase())
+        }
+
+        new Feriante("Mr. Crecepelo").dice("Me lo quitan de las manos")
+*/
+
+
+    class Locutor{
+        constructor(nombre, verbo){
+            this.nombre = nombre;
+            this.verbo = verbo || "dice";
+        }
+
+        dice(text){
+            console.log(this.nombre + " " + this.verbo + " '" + text + "'");
+        }
+    }
+
+    class Feriante extends Locutor{
+        constructor(nombre) {
+            super(nombre, "grita");
+        }
+
+        dice(text){ //metodo sovreescrito
+            super.dice(text.toUpperCase());
+            //console.log(this.nombre + " " + this.verbo + " '" + text.toUpperCase() + "'");
+            
+        }
+    }
+
+
+    //let f =  
+    new Feriante("Mr. Crecepelo").dice("Me lo quitan de las manos");
+    
+    </script>
+</body>
+</html>

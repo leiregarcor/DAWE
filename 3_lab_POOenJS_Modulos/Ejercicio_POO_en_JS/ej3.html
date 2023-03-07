@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3</title>
+</head>
+<body>
+
+    <script>
+
+    function Punto (x,y) {
+        this.x = x;
+        this.y = y;
+
+    }
+
+    Punto.prototype.suma = function(punto) {
+            let respuesta = new Punto (this.x + punto.x, this.y + punto.y);
+            return respuesta;
+    }
+
+
+
+
+    
+    
+    let punto = new Punto(1, 2).suma(new Punto(2, 1));
+    //console.log(punto);
+    console.log(punto.x, punto.y); // Se espera: 3 3  //TODO
+    console.log(punto instanceof Punto); // Se espera: true
+    console.log(punto.constructor.name); // Se espera Punto
+
+    </script>
+    
+</body>
+</html>

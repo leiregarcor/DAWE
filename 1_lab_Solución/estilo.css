@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+  }
+
+main {
+    border: 1px solid #000;
+}
+
+footer {
+    border: 1px solid #000;
+}
+
+section {
+    float: left;
+    width: 70%;
+}
+
+article {
+    border: 1px solid #000;
+}
+
+aside {
+    border: 1px solid #000;
+    float: left;
+    width: 30%;
+}
+
+main:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+img {
+    opacity: 0.5;
+}
+
+img:hover {
+    border:3px dotted red;
+    opacity: 1;
+}

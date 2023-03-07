@@ -1,0 +1,50 @@
+main {
+    border: 1px solid #000;
+}
+
+article {
+    border: 1px solid #000;
+}
+
+aside {
+    border: 1px solid #000;
+}
+
+footer {
+    border: 1px solid #000;
+}
+
+h2 {
+    color: blue; 
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+}
+
+.left {
+    width: 75%;
+}
+
+.right {
+    width: 25%;
+}
+
+.row::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+img {
+    opacity: 0.5;
+}
+img:hover {
+    opacity: 1;
+    border-style: dotted;
+    border-color: red;
+}
