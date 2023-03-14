@@ -10,9 +10,12 @@ function inicializarGestores()
 		var isbn = document.getElementById("libros").value
 					console.log(data[`ISBN:${isbn}`])
 					
-            		document.getElementsByTagName("h5")[0].innerHTML=data[`ISBN:${isbn}`].details.title
-            		document.getElementsByTagName("h6")[0].innerHTML=data[`ISBN:${isbn}`].details.authors[0].name
-
+            		document.getElementsByTagName("h5")[0].innerHTML=data[`ISBN:${isbn}`].details.title;
+					var autores= '';
+            		for (var i=0; i<data[`ISBN:${isbn}`].details.authors.length; i++){
+            			autores = data[`ISBN:${isbn}`].details.authors[i].name + '<br>' + autores ;
+            		}
+            		document.getElementsByTagName("h6")[0].innerHTML= autores; //data[`ISBN:${isbn}`].details.authors[0].name
 
 	};
 	generarImagen = (data) => {
