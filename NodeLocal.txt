@@ -1,0 +1,71 @@
+# SERVIDOR LOCAL NODE
+
+1- crear una carpeta de trabajo:
+
+mkdir dawe001
+cd dawe001
+
+2- para crear un servidor:
+
+npm init
+
+3- pulsamos enter en todo lo que pida, al final yes -> genera un package.json
+
+4- instalamos el paquete 'serve'
+
+npm install serve
+
+5- se crean los archivos:
+
+ls -l
+
+	node_modules/
+	package-lock.json
+	package.json
+
+6- comprobamos las dependencias instaladas en package.json
+
+cat package.json
+	{
+	  "name": "dawe005",
+	  "version": "1.0.0",
+	  "description": "",
+	  "main": "index.js",
+	  "scripts": {
+	    "start": "serve ./public"
+	  },
+	  "author": "",
+	  "license": "ISC",
+	  "dependencies": {
+	    "nerve": "^1.0.0"
+	  }
+	}
+
+
+7- creamos una carpeta para los ficheros dentro de la carpeta de trabajo:
+mkdir puclic
+
+8- para servir los ficheros dentro de esa carpeta (public), modificaremos el package.json:
+
+gedit package.json
+
+	{
+	  "name": "dawe005",
+	  "version": "1.0.0",
+	  "description": "",
+	  "main": "index.js",
+	  "scripts": {
+	    "start": "serve ./public"
+	  },
+	  "author": "",
+	  "license": "ISC",
+	  "dependencies": {
+	    "nerve": "^1.0.0"
+	  }
+	}
+
+9- para lanzar el servidor, usaremos: 
+
+npm start
+
+10- copiando y pegando la URL en el navegador podremos ver nuestra página web wn marcha

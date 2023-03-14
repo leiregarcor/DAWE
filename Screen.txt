@@ -1,0 +1,34 @@
+# Screen
+Se crea una sesión de terminal que podemos recuperar cuando queramos (siempre está en ejecición aunque cerremos la terminal.
+
+1# INSTALACIÓN EN UBUNTU
+
+sudo apt-get install screen
+
+2# CREAR UNA SESIÓN
+
+1- crear una sesión
+
+screen
+
+2- podemos darle un nombre para identificar la sesión
+
+ screen -S dawe_entrega_3
+ 
+3- si cerramos la sesión y queremos recuperarla:
+ 
+ screen -r dawe_entrega_3
+ (no hace falta poner el nombre completo con poner el mínimo substring identificativo vale (p.e. “screen -r da”). Si existiese otra sesión para la entrega 4 (dawe_entrega_4) esto no sería posible, ya que ambas empiezan por el mismo substring.
+ 
+4- para ver todas nuestras sesiones de screen:
+
+screen -ls
+
+5- Una sesión que está utilizándose está Attached. Si tenemos alguna sesión así abierta en otro ordenador pero nos interesa abrirla en el que estamos trabajando ahora:
+
+screen -d -r <nombre_sesion>
+
+7- Finalmente, para cerrar una sesión (no podremos recuperarla):
+
+exit
+
