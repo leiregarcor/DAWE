@@ -2,19 +2,6 @@ var efecto = null;
 var clip = "video/demovideo1"; // nombre del vídeo, sin extensión
 var rotando = false;
 
-function loadAudio(url) {
-	return new Promise(resolve => {
-		const audio = new Audio();
-		audio.addEventListener("loadeddata", () => {
-			resolve(audio);
-		});
-		audio.src = url; 
-		audio.load()
-		audio.play()// cuando se cumpla, saltará el evento loadeddata
-	});
-}
-
-
 window.onload = function() {
 
 	var video = document.getElementById("video");
@@ -28,22 +15,46 @@ window.onload = function() {
 	botonScifi.onclick = cambiarEfecto;
 	var botonRotar = document.getElementById("rotar");
 	botonRotar.onclick = rotate;
+
+	var botonAudio = document.getElementById("audio");	
+	botonAudio.onclick = audio;
+	
 	var pipButtonElement = document.getElementById("pipButtonElement");
-	pipButtonElement.onclick = pip;
-
-
-
+	pipButtonElement.addEventListener('click', async function() {
+		pipButtonElement.disabled = true;
+		if (video !== document.pictureInPictureElement) {
+			await video.requestPictureInPicture();
+		  } else {
+			await document.exitPictureInPicture();
+		  }
+		pipButtonElement.disabled = false;
+	});
 				
 	video.addEventListener("play", procesarFrame, false);
 	
 	video.src = clip + getFormatExtension();
 	video.load();
-	video.play();
-
-   
-	loadAudio("audio/soundtrack.mp3").then( audio => audio.play());
+	video.play();   
 	
 }
+
+
+function loadAudio(url) {
+	return new Promise(resolve => {
+		const audio = new Audio();
+		audio.addEventListener("loadeddata", () => {
+			resolve(audio);
+		});
+		audio.src = url; 
+		audio.load()
+		audio.play()// cuando se cumpla, saltará el evento loadeddata
+	});
+}
+
+function audio() {
+	loadAudio("audio/soundtrack.mp3").then( audio => audio.play());
+}
+
 function pausar(){
 	var video = document.getElementById("video");
 	if (video.paused){
@@ -129,11 +140,7 @@ function scifi(pos, r, g, b, data) {
 }
 
 
-function  pip(){
-	var video = document.getElementById("video");
-  	video.requestPictureInPicture();
 
-}
 
 function rotate() {
 
@@ -155,7 +162,3 @@ function rotate() {
 		 setTimeout(rotate,10)
 		
 }
-
-
-
-
