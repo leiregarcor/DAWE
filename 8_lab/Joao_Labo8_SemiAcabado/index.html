@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Laboratorio Formularios y Drag & Drop</title>
+<link rel="stylesheet" type="text/css" media="all" href="filedrag.css" />
+</head>
+<body>
+
+<form id="upload" method="POST" enctype="multipart/form-data">
+
+<fieldset>
+<legend>Datos del cliente</legend>
+
+<div>
+   <label for="nombre">Nombre: </label>
+   <input type="text" id="nombre" name="nombre" autofocus placeholder="Introduce tu nombre">
+   <div id="errorNombre"></div>
+   <br>
+   <label for="numero">Teléfono:</label>
+   <input type="tel" id="numero" name="numero" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"required placeholder="Patrón: 123-456-789">
+   <div id="errorTel"></div>
+   <br>
+
+   <label for="mail">E-mail:</label>
+   <input type="email" id="mail" name="mail"required placeholder="Introduce tu dirección de correo electrónico">
+   <div id="errorMail"></div>
+   <br>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Libros</legend><br>
+
+<div>
+   <input type="text" id="libros" list="librosList" name="Libros" placeholder="">
+     <datalist id="librosList">
+                <option>Libro 1</option>
+                <option>Libro 12</option>
+                <option>Libro 13</option>
+                <option>Libro 14</option>
+                <option>Libro 15</option>
+      </datalist>
+   <label for="cant">Cantidad (Máx 5): </label>
+   <input type="number" id="cant" name="cant" min="1" max="5" required>
+   <div id="errorLibro"></div>
+   <div id="errorCant"></div>
+   <br>
+</div>
+</fieldset>
+
+<fieldset>
+<legend>Subir Fichero</legend>
+
+<div>
+   <label for="fileselect">Elige los ficheros a subir:</label>
+   <input type="file" id="fileselect" name="fileselect" multiple />
+   <div id="filedrag">o arrastra aquí tus ficheros</div>
+</div>
+</fieldset>
+
+<br>
+   <!-- 
+<input type="button" id="enviar" value="enviar">
+-->
+<input type="submit" id="enviar" value="enviar">
+
+</form>
+<div id="messages"><p>Mensajes de estado</p></div>
+<script src="filedrag.js"></script>
+</body>
+</html>
