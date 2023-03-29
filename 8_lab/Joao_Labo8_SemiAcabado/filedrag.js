@@ -27,11 +27,11 @@
 
 		// fetch FileList object
 		var files = e.target.files || e.dataTransfer.files;
-		console.log(files.length);
+		//console.log(files.length);
         //if ( e.constructor.name !=  "DragEvent"){
             // process all File objects
             for (var i = 0, f; f = files[i]; i++) {
-				console.log(f.name);
+				//console.log(f.name);
                 parseFile(f);
             }
         //}
@@ -50,7 +50,7 @@
 
 	// output file information
 	function parseFile(file) {
-		console.log(file.name);
+		//console.log(file.name);
 		output(
 			"<p>Datos del fichero: <strong>" + file.name +
 			"</strong> Tipo: <strong>" + file.type +
@@ -64,63 +64,67 @@
 		var validado = true;
 		var nombre = document.getElementById("nombre").value;
 		if(nombre==""){
-			document.getElementById("errorNombre").innerHTML = "El campo del Nombre es obligatorio"
-			document.getElementById("errorNombre").style.color = "red"
+			document.getElementById("errorNombre").innerHTML = "El campo del Nombre es obligatorio";
+			document.getElementById("errorNombre").style.color = "red";
+			console.log("El campo del Nombre es obligatorio");
 			validado=false;
 		}else{
-			document.getElementById("errorNombre").innerHTML = ""
+			document.getElementById("errorNombre").innerHTML = "";
 		}
 
 		var tel = document.getElementById("numero").value;
-		console.log(tel)
+		//console.log(tel);
 		var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{3})$/;
  
 		if (!tel.match(re)) {
-			document.getElementById("errorTel").innerHTML = "El campo del telefono debe contener el patrón 123(-)456(-)789"
-			document.getElementById("errorTel").style.color = "red"
+			document.getElementById("errorTel").innerHTML = "El campo del telefono debe contener el patrón 123(-)456(-)789";
+			document.getElementById("errorTel").style.color = "red";
+			console.log("El campo del telefono debe contener el patrón 123(-)456(-)789");
 			validado=false;
 		}else{
-			document.getElementById("errorTel").innerHTML = ""
+			document.getElementById("errorTel").innerHTML = "";
 		}
 		var mail = document.getElementById("mail").value;
 		var re2 = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		if (!mail.match(re2)) {
-			document.getElementById("errorMail").innerHTML = "El campo del email es incorrecto. Debe tener el siguiente formato: hola@gmail.com"
-			document.getElementById("errorMail").style.color = "red"
+			document.getElementById("errorMail").innerHTML = "El campo del email es incorrecto. Debe tener el siguiente formato: hola@gmail.com";
+			document.getElementById("errorMail").style.color = "red";
+			console.log("El campo del email es incorrecto. Debe tener el siguiente formato: hola@gmail.com");
 			validado=false;
 		}else{
-			document.getElementById("errorMail").innerHTML = ""
+			document.getElementById("errorMail").innerHTML = "";
 		}
 		
 		var libro = document.getElementById("libros").value;
-		console.log(libro)
+		//console.log(libro)
 		if(libro==""){
-			document.getElementById("errorLibro").innerHTML = "El campo del Libro es obligatorio"
-			document.getElementById("errorLibro").style.color = "red"
+			document.getElementById("errorLibro").innerHTML = "- El campo del Libro es obligatorio";
+			document.getElementById("errorLibro").style.color = "red";
+			console.log("El campo del Libro es obligatorio");
 			validado=false;
 		}else{
-			document.getElementById("errorLibro").innerHTML = ""
+			document.getElementById("errorLibro").innerHTML = "";
 		}
 		var cant = document.getElementById("cant").value;
-		console.log(cant)
+		//console.log(cant)
 		if(cant =="" || cant>5 || cant < 1){
-			document.getElementById("errorCant").innerHTML = "La cantidad debe ser un número del 1 al 5"
-			document.getElementById("errorCant").style.color = "red"
+			document.getElementById("errorCant").innerHTML = "- La cantidad debe ser un número del 1 al 5";
+			document.getElementById("errorCant").style.color = "red";
+			console.log("La cantidad debe ser un número del 1 al 5");
 			validado=false;
 		}else{
-			document.getElementById("errorCant").innerHTML = ""
+			document.getElementById("errorCant").innerHTML = "";
+		}
+
+		if (validado) {
+			enviar();
 		}
 		
 	}
-    function enviar(submitform){
 
-    // debes devolver una función que recoja los datos de submitform usando FormData y haga una
-    // petición post (usando el Fetch API) con dichos datos a /pedido/add 
-    //  El resultado debes tratarlo como un objeto JSON y mostrarlo pantalla. En concreto la respuesta
-    // JSON debe contener las rutas a los ficheros subidos al servidor (al hacer click sobre ellas deben
-    // abrirse los ficheros) y los valores del resto de campos
-
-    }
+	function enviar(){
+		console.log("Formulario enviado correctamente :)");
+	}
 
 	// initialize
 	function init() {
