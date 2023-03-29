@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Laboratorio Formularios y Drag & Drop</title>
+      <link rel="stylesheet" type="text/css" media="all" href="filedrag.css" />
+   </head>
+   <body>
+
+      <form id="upload" method="POST" enctype="multipart/form-data">
+         <fieldset>
+            <legend>Datos del cliente</legend>  <br>  
+            <label for="nombre">Nombre</label> <br>       
+            <input type="text" name="nombre" id="nombre" size="15" /><br> 
+            <label for="telf">Teléfono</label> <br>    
+            <input type="tel" name="telf" id="telf" size="15" /> <br>
+            <label for="mail">E-mail</label> <br>
+            <input type="email" name="mail" id="mail" size="15" /> <br><br>
+         </fieldset>       
+
+         <fieldset>
+            <legend>Libros</legend> <br>
+         </fieldset>
+
+         <fieldset>
+         <legend>File Upload</legend>
+         <div>
+            <label for="fileselect">Elige los ficheros a subir:</label>
+            <input type="file" id="fileselect" name="fileselect" multiple />
+            <div id="filedrag">o arrastra aquí tus ficheros</div>
+         </div>
+         </fieldset>
+         
+      <input type="submit" id="enviar" value="enviar">
+      </form>
+      <div id="messages">
+         <p>Mensajes de estado</p>
+      </div>
+      <script src="filedrag.js"></script>
+   </body>
+</html>
