@@ -81,21 +81,46 @@ app.delete('/users/delete/:id', function(req, res) {
 });
 
 app.put('/users/edit/:id', function(req, res) {
-	db.users.remove({_id: ObjectId(req.params.id)}, function(err, result) {
+	//db.users.update({_id: ObjectId("642736c4e08120bee822d931")}, {$set: {first_name: 'jone'}})
+	
+});
+
+app.get('/users/getUser/:id', function(req, res) {
+	//db.users.findOne({_id:ObjectId("642736c4e08120bee822d931")})
+	db.users.findOne({_id: ObjectId(req.params.id)}, function(err, result) {
 		if(err) {
-			console.log(err);
-		}
-		res.redirect(303, '/');
+    		console.log(err);
+    	} else {
+    		//console.log(result); // lo que mongodb nos devuelva
+    		
+    		// mandar los datos en texto plano
+    		//res.send(result);
+			//manda la repsuesta en json
+			//res.json(usuario);
+
+			//prueba:
+			// no funciona asi, pero si mando result tampoco :()
+			var usuario = {
+				"first_name" : result.first_name,
+				"last_name" : result.last_name,
+				"email" : result.email,
+			};
+			console.log(usuario)
+			res.json(usuario);
+    	}
 	});
+
+
+	
 });
 
 //enrutamiento: función callback a una petición de la página raiz
 app.get("/", function(req, res) { // peticion y respuesta como parametros
-    db.users.find(function(err, docs) {
+    db.users.find(function(err, docs) { // si la consulta falla-> error tendrá un objeto de error; en caso contrario, docs contendrá el documento encontrado
     	if(err) {
     		console.log(err);
     	} else {
-    		console.log(docs); // lo que mongodb nos devuelva
+    		//console.log(docs); // lo que mongodb nos devuelva
     		// para rellenar la plantilla
     		res.render('index', { //JSON con tuplas que se pasan como variables
 			title: 'clientes',

@@ -4,6 +4,7 @@
 
 <ul>
     <% if (errors) { %>
+    
     <% errors.forEach( function(error){  %>
         <li><%=error.msg %></li>
     <% }) %>
@@ -12,15 +13,17 @@
 
 <form method="POST" action="/users/add" id="form"> <!--el action es una ruta de express-->
     <label>Nombre</label>
-    <input type="text" name="first_name">
+    <input type="text" name="first_name" id="first_name">
     <br>
     <label>Apellido</label>
-    <input type="text" name="last_name">
+    <input type="text" name="last_name" id="last_name">
     <br>
     <label>Email</label>
-    <input type="text" name="email">
+    <input type="text" name="email" id="email">
     <br>
-    <input type="submit" Value="Enviar" name="submit">
+    <input type="submit" Value="Enviar" name="submit" id="submit">
+    <input type="button" Value="Edit" name="editar" id="editar" >
+
 </form>
 
 <h1><%=title %></h1>
