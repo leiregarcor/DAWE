@@ -80,7 +80,7 @@ app.delete('/users/delete/:id', function(req, res) {
 	});
 });
 
-app.put('/users/edit/:id', function(req, res) {
+app.post('/users/edit/:id', function(req, res) {
 	//db.users.update({_id: ObjectId("642736c4e08120bee822d931")}, {$set: {first_name: 'jone'}})
 	
 });
@@ -94,19 +94,9 @@ app.get('/users/getUser/:id', function(req, res) {
     		//console.log(result); // lo que mongodb nos devuelva
     		
     		// mandar los datos en texto plano
-    		//res.send(result);
+    		res.send(result);
 			//manda la repsuesta en json
 			//res.json(usuario);
-
-			//prueba:
-			// no funciona asi, pero si mando result tampoco :()
-			var usuario = {
-				"first_name" : result.first_name,
-				"last_name" : result.last_name,
-				"email" : result.email,
-			};
-			console.log(usuario)
-			res.json(usuario);
     	}
 	});
 

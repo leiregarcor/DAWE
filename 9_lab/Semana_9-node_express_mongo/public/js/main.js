@@ -24,29 +24,9 @@ window.onload = function() {
 	    item.addEventListener("click", editUser);
 	}
 
-	//event listener del boton editar y estilo display none
-	let botonEdit = $id("editar");
-	botonEdit.style.display = "none";
-	botonEdit.addEventListener("click",botonEditar);
 }
 
-function botonEditar(event) {	
-	// una vez hemos hecho click en el enlace de editar de un usuario y queremos mandar los cambios entrará aqui:
-	// var confirmation = confirm('Are You Sure?');
-	// if(confirmation){
-	// 	var url = '/users/edit/' + event.target.getAttribute('data-id');
-	// 	var consulta = new XMLHttpRequest();
-	// 	consulta.open("PUT", url);
-	// 	consulta.onload = function() {
-	// 		if (consulta.status == 200) {
-	// 			window.location.replace('/')
-	// 		}
-	// 	};
-	// 	consulta.send();
-	// } else {
-	// 	return false;
-	// }
-}
+
 
 function deleteUser(event){
     var confirmation = confirm('Are You Sure?');
@@ -70,27 +50,19 @@ function editUser(event) {
 	//document.getElementById("editar").style.display = "none";
 	//boton enviar no visible
 	let botonEnviar = $id("submit");
-	botonEnviar.style.display = "none";
-	// boton editar visible
-	let botonEdit = $id("editar");
-	botonEdit.style.display = "inline";
+	botonEnviar.value = "Edit";
 
 	// campos del formulario
 	var usuario = $id("first_name");
 	var apellido = $id("last_name");
 	var email = $id("email");
 
-	console.log('editar')	;
+	//console.log('editar')	;
 	var url = '/users/getUser/' + event.target.getAttribute('data-id');
 	fetch(url)
-		.then((response)=> response.json)
+		.then((response)=> response.json())
 		.then((data)=> {
-			console.log(data);
-			// usuario.value = 'hola';
-			// apellido.value = 'hola';
-			// email.value = 'hola';
 			
-			//no entiendo porque sale undefined :()
 			usuario.value = data.first_name;
 			apellido.value = data.last_name;
 			email.value = data.email;
