@@ -49,7 +49,7 @@ app.post('/users/add', [
 			res.render('index',  //index nombre del archivo, manda la vista renderizada al cliente
 			//pasamos variables locales a la vista en formato JSON
 			{	title:'clientes',
-				users: users,
+				users: users, //esta mal
 				errors: errors.array()
 			});
 		} else {
@@ -80,8 +80,21 @@ app.delete('/users/delete/:id', function(req, res) {
 	});
 });
 
-app.post('/users/edit/:id', function(req, res) {
-	//db.users.update({_id: ObjectId("642736c4e08120bee822d931")}, {$set: {first_name: 'jone'}})
+app.post('/user/edit/:id', function(req, res) {
+	
+	db.users.update(
+		{_id: ObjectId(req.params.id)},
+	 	{$set: {first_name: req.body.first_name,
+				last_name: req.body.last_name,
+				email : req.body.email
+			   }
+		},  
+		function(err, result) {
+			if(err) {
+				console.log(err);
+			}
+			res.redirect(303, '/');
+	});
 	
 });
 

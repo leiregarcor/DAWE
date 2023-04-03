@@ -52,6 +52,7 @@ function editUser(event) {
 	let botonEnviar = $id("submit");
 	botonEnviar.value = "Edit";
 
+	
 	// campos del formulario
 	var usuario = $id("first_name");
 	var apellido = $id("last_name");
@@ -66,7 +67,12 @@ function editUser(event) {
 			usuario.value = data.first_name;
 			apellido.value = data.last_name;
 			email.value = data.email;
-		});
+
+			let form = $id("form");
+			form.action = "/user/edit/" + event.target.getAttribute('data-id');
 			
+		});
+
+	
 
 }
