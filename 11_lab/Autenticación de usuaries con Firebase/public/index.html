@@ -164,7 +164,7 @@ limitations under the License.
           firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
             console.log(idToken);
 
-            fetch('/getToken', {
+            /*fetch('/getToken', {
               method: 'post',
               headers: {'Content-Type': 'application/json'},
               body: `{"idToken" : "${idToken}"}`
@@ -172,7 +172,25 @@ limitations under the License.
               return response.json();
             }).then(function(data) {
               console.log('Created with status: ' + data.status );
-            });
+              //petición post para cambiar de página cuando está logeado
+              fetch("/sesion",{
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: `{"email": "${email}" }`
+
+               }).then(function(response) {
+                window.location.href="/admin" 
+              });
+            });*/
+
+            fetch("/sesion",{
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: `{"email": "${email}" }`
+
+               }).then(function(response) {
+                window.location.href="/admin" 
+              });
 
             //
             // // Send token to your backend via HTTPS
@@ -200,7 +218,12 @@ limitations under the License.
       document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
     }
 
-    window.onload = function() {
+    window.onload = async function() {
+      //logout en el url
+      if (location.href.includes('logout')){
+        //es asincrono
+        await firebase.auth().signOut();
+      }
       initApp();
     };
   </script>

@@ -24,7 +24,7 @@ router.get('/',(req,res) => {
   res.render('index', { title : 'title'});
 });
 
-router.post('/login',(req,res) => {
+router.post('/sesion',(req,res) => {
   req.session.email = req.body.email;
   res.end('done');
 });
@@ -32,7 +32,7 @@ router.post('/login',(req,res) => {
 router.get('/admin',(req,res) => {
   if(req.session.email) {
     res.write(`<h1>Hello ${req.session.email} </h1><br>`);
-    res.end('<a href='+'/logout'+'>Logout</a>');
+    res.end('<a href='+'/?logout'+'>Logout</a>');
   }
   else {
     res.write('<h1>Please login first.</h1>');
@@ -40,7 +40,7 @@ router.get('/admin',(req,res) => {
   }
 });
 
-router.get('/logout',(req,res) => {
+router.get('/?logout',(req,res) => {
   req.session.destroy((err) => {
     if(err) {
       return console.log(err);
