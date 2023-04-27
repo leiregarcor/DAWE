@@ -164,7 +164,7 @@ limitations under the License.
           firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
             console.log(idToken);
 
-            /*fetch('/getToken', {
+            fetch('/getToken', {
               method: 'post',
               headers: {'Content-Type': 'application/json'},
               body: `{"idToken" : "${idToken}"}`
@@ -181,16 +181,8 @@ limitations under the License.
                }).then(function(response) {
                 window.location.href="/admin" 
               });
-            });*/
-
-            fetch("/sesion",{
-                method: 'post',
-                headers: {'Content-Type': 'application/json'},
-                body: `{"email": "${email}" }`
-
-               }).then(function(response) {
-                window.location.href="/admin" 
-              });
+              
+            });
 
             //
             // // Send token to your backend via HTTPS
