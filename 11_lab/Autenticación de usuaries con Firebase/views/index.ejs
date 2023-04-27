@@ -11,6 +11,10 @@
     <% } %> 
 </ul>
 
+<h1> Hello <%=helloemail %></h1>
+
+<h1><%=title2 %></h1>
+
 <form method="POST" action="/users/add" id="form"> <!--el action es una ruta de express-->
     <label>Nombre</label>
     <input type="text" name="first_name" id="first_name">
@@ -24,7 +28,6 @@
     <input type="submit" Value="Enviar" name="submit" id="submit">
 
 </form>
-
 <h1><%=title %></h1>
 
 <ul>
@@ -32,5 +35,7 @@
             <li><%=user.first_name %> <%= user.last_name%> - <a href="#" class="deleteUser" data-id="<%= user._id %>">Delete</a> - <a href="#" class="editUser" data-id="<%= user._id %>">Edit</a> </li>
     <% }) %>
 </ul>
+
+<a href=/logout>Logout</a>
     
 <%- include('partials/footer.ejs') %>
