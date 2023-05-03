@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>HTML5 File Drag & Drop API</title>
+	<link rel="stylesheet" type="text/css" media="all" href="filedrag.css" />
+</head>
+<body>
+	<form id="upload" method="POST" enctype="multipart/form-data">
+	<fieldset>
+	<legend>Datos del cliente</legend>
+	<div>
+		<br>
+		Nombre: <input name="nombre" id="nombre" placeholder="Introduce tu nombre" autofocus>
+		<br>
+		<div id="comprobarnombre" > </div>
+		<br>
+		Teléfono: <input type="tel" id="telefono" name="telefono"
+        pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" placeholder="Patrón: 123-456-789">
+		<br>
+		<div id="comprobartel" > </div>
+		<br>
+		E-mail: <input type="email" id="email" name="email" placeholder="Introduce tu dirección de correo electrónico" size="60">
+		<br>
+		<div id="comprobaremail" > </div>
+		<br>
+	</div>
+	</fieldset>
+	
+	
+	<fieldset>
+	<legend>Libros</legend>
+	<div>
+		<br>
+		<input type="text" list="libros" name="libros" id="books" size="40">
+		<datalist id="libros">
+		  <option value="Libro1">
+		  <option value="Libro2">
+		  <option value="Libro3">
+		  <option value="Libro4">
+		  <option value="Libro5">
+		</datalist>
+		Cantidad (Máx 5): <input name="cantidad" id="cantidad" type="number" min="1" max="5" value="" step="1">
+		<br>
+		<div id="comprobarlibro"></div>
+		<div id="comprobarcantidad"></div>
+	</div>
+	</fieldset>
+	
+	
+	<fieldset>
+	<legend>File Upload</legend>
+	<div>
+	   <label for="fileselect">Elige los ficheros a subir:</label>
+	   <input type="file" id="fileselect" name="fileselect" />
+	   <div id="filedrag">Arrastra aqui tus ficheros</div>
+	</div>
+	</fieldset>
+
+	   
+	<input type="button" id="enviar" value="Enviar">
+	</form>
+	<div id="messages"><p>Mensajes de estado</p></div>
+	<script src="filedrag.js"></script>
+	<div id="resultados"> </div>
+	
+</body>
+</html>
