@@ -5,14 +5,17 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('lab13-websockets:server');
+var debug = require('debug')('sockets:server');
 var http = require('http');
+var fs = require('fs');
+var https = require('https');
+
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3002'); //tengo el 3000 en uso en el droplet
 app.set('port', port);
 
 /**
@@ -29,24 +32,71 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
+
+const httpsServer = https.createServer({
+	key: fs.readFileSync('/etc/letsencrypt/live/leire.me/privkey.pem'), // lineas que hay que PERSONALIZAR
+    cert: fs.readFileSync('/etc/letsencrypt/live/leire.me/fullchain.pem') // lineas que hay que PERSONALIZAR
+}, app);
+
+httpsServer
+    .listen(3030, function () {
+        console.log('Example app listening on port 3030! Go to https://localhost:3030/')
+    });
+
+// create a WebSocket listener for the same server
+const realtimeListener = require('socket.io')(httpsServer);
+
+
+// object to store desktop sockets
+let desktopSocket = null;
+
+// the socket can be a phone or a desktop
+realtimeListener.on('connection', function (socket) {
+
+    // receives a connect message from a desktop (for this example, we will only have one)
+    socket.on("desktop-connect", function () {
+        console.log("Desktop Connected");
+        desktopSocket.emit('desktop-connectLEIRE');
+        desktopSocket = socket;
+    });
+
+    // receives a connect message from a phone
+    socket.on("phone-connect", function () {
+        console.log("Phone Connected");
+        if (desktopSocket) {
+            // ... informs desktop that a phone has connected
+            desktopSocket.emit('phone-connect');
+        }
+    });
+
+    // receives a connect message from a phone
+    socket.on("phone-move", function (data) {
+        console.log("Phone moved:" + data.beta  );
+        if (desktopSocket)
+            desktopSocket.emit('phone-move', data.beta);
+    });
+});
+
+
 /**
  * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -54,27 +104,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -82,9 +132,9 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+    debug('Listening on ' + bind);
 }
