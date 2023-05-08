@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href='https://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>Title</title>
+    <link href='stylesheets/style.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.4/zepto.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/index.js"></script>
+</head>
+<body>
+<div class="col">
+    <div class="row" id="frame">reference frame coordinates</div>
+    <div class="row">
+        <div class="col strech">
+            <i id="x-icon" class="fa fa-mobile"></i>
+            <div class="value">X: <span id="x">N/A</span></div>
+        </div>
+        <div class="col strech">
+            <i id="y-icon" class="fa fa-mobile"></i>
+            <div class="value">Y: <span id="y">N/A</span></div>
+        </div>
+        <div class="col strech">
+            <i id="z-icon" class="fa fa-mobile"></i>
+            <div class="value">Z: <span id="z">N/A</span></div>
+        </div>
+    </div>
+    <div class="row">
+        <ul>notice how X and Y axes are affected when:
+            <li>in portrait versus landscape modes</li>
+            <li>values near right angles</li>
+        </ul>
+    </div>
+    </di>
+</div>
+</body>
+</html>

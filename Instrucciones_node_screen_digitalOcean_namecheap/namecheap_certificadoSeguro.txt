@@ -1,0 +1,36 @@
+root@ubuntu-s-1vcpu-1gb-lon1-01:~# sudo certbot certonly --manual
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Please enter the domain name(s) you would like on your certificate (comma and/or
+space separated) (Enter 'c' to cancel): leire.me
+Requesting a certificate for leire.me
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Create a file containing just this data:
+
+Hii9spOuxs0Mv2KV1ME2mNKVYsN8GZLhSR8hGvPRWAk.icS4_mrbOt86-NtBXxnSnFGlBfkkz1UfN0YvLXDLzOE
+
+And make it available on your web server at this URL:
+
+http://leire.me/.well-known/acme-challenge/Hii9spOuxs0Mv2KV1ME2mNKVYsN8GZLhSR8hGvPRWAk
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Press Enter to Continue
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/leire.me/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/leire.me/privkey.pem
+This certificate expires on 2023-08-02.
+These files will be updated when the certificate renews.
+
+NEXT STEPS:
+- This certificate will not be renewed automatically. Autorenewal of --manual certificates requires the use of an authentication hook script (--manual-auth-hook) but one was not provided. To renew this certificate, repeat this same certbot command before the certificate's expiry date.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+root@ubuntu-s-1vcpu-1gb-lon1-01:~# 
+
+mi dominio seguro
+https://leire.me/
