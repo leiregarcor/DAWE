@@ -15,7 +15,7 @@ var https = require('https');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3002');
+var port = normalizePort(process.env.PORT || '3002'); //tengo el 3000 en uso en el droplet
 app.set('port', port);
 
 /**
@@ -57,7 +57,8 @@ realtimeListener.on('connection', function (socket) {
     // receives a connect message from a desktop (for this example, we will only have one)
     socket.on("desktop-connect", function () {
         console.log("Desktop Connected");
-	    desktopSocket = socket;
+        desktopSocket.emit('desktop-connect');
+        desktopSocket = socket;
     });
 
     // receives a connect message from a phone
