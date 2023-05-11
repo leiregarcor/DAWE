@@ -7,33 +7,34 @@ export function setupSockets(){
     socket.emit('desktop-connect');
 
     // recibimos el movimiento del movil //TODO no funciona no se como hacerlo
-    socket.on("phone-move", function () {
-        console.log('se mueve');  
-
-        window.dispatchEvent(
-            new KeyboardEvent('keydown',
-                {key: 'ArrowLeft'
-            })
-        );
-        // Y luego que dejamos de pisarla (levantamos el dedo)
-        window.dispatchEvent(
-            new KeyboardEvent('keyup',
-                {key: 'ArrowLeft'
-            })
-        );
-
-        window.dispatchEvent(
-            new KeyboardEvent('keydown',
-                {key: 'ArrowRight'
-            })
-        );
-        // Y luego que dejamos de pisarla (levantamos el dedo)
-        window.dispatchEvent(
-            new KeyboardEvent('keyup',
-                {key: 'ArrowRight'
-            })
-        );
-       
+    socket.on("phone-move", function (data) {
+        console.log('se mueve'); 
+        
+        if (data >= 0) { //angulo + derecha
+            window.dispatchEvent(
+                new KeyboardEvent('keydown',
+                    {key: 'ArrowRight'
+                })
+            );
+            // Y luego que dejamos de pisarla (levantamos el dedo)
+            window.dispatchEvent(
+                new KeyboardEvent('keyup',
+                    {key: 'ArrowRight'
+                })
+            );
+        } else { //angulo - izquierda
+            window.dispatchEvent(
+                new KeyboardEvent('keydown',
+                    {key: 'ArrowLeft'
+                })
+            );
+            // Y luego que dejamos de pisarla (levantamos el dedo)
+            window.dispatchEvent(
+                new KeyboardEvent('keyup',
+                    {key: 'ArrowLeft'
+                })
+            );            
+        }       
     });
 
     
