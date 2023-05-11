@@ -49,14 +49,14 @@ function pulsar(tecla){
             break;  
         case "ArrowRight":
             //if(x+27<476)
-            if(x+window_w<img_w){
+            if(1+x+window_w<img_w){
               x=Math.min(img_w-window_w-1, x+speed);
             }else{
                 crash();
             }
             break;
         case "ArrowDown":
-            if(y+window_h<img_h){
+            if(1+y+window_h<img_h){
                y=Math.min(img_h-window_h-1, y+speed);
             }else{
                 crash();
