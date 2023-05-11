@@ -8,7 +8,20 @@ export function setupSockets(){
 
     // recibimos el movimiento del movil //TODO no funciona no se como hacerlo
     socket.on("phone-move", function () {
-        // Primero simulamos que pisamos la tecla
+        console.log('se mueve');  
+
+        window.dispatchEvent(
+            new KeyboardEvent('keydown',
+                {key: 'ArrowLeft'
+            })
+        );
+        // Y luego que dejamos de pisarla (levantamos el dedo)
+        window.dispatchEvent(
+            new KeyboardEvent('keyup',
+                {key: 'ArrowLeft'
+            })
+        );
+
         window.dispatchEvent(
             new KeyboardEvent('keydown',
                 {key: 'ArrowRight'
@@ -20,7 +33,8 @@ export function setupSockets(){
                 {key: 'ArrowRight'
             })
         );
-        
+       
     });
+
     
 }

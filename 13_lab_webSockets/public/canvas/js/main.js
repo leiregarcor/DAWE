@@ -22,11 +22,16 @@ logo.onload = function(){
     img_h = this.height;
     context.drawImage(logo, x, y, window_w, window_h, img_w+offset_fixed_window, 0, 2*window_w, 2*window_h); // dibujar la ventana fija donde se visualiza el contenido de la ventana
 };
-document.onkeydown = function pulsar(tecla){
+
+window.addEventListener('keydown', pulsar, true);
+
+function pulsar(tecla){
+    console.log('onkeydown');
+
     canvas.width=canvas.width; //Para que no se quede atascado en el borde. Borra tambien todo el contenido del canvas.
     context.lineWidth = "2";
     tecla.preventDefault();
-    switch(tecla.code){
+    switch(tecla.key){
 
         case "ArrowLeft":
             if(x>0)
