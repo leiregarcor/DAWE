@@ -50,6 +50,7 @@ const realtimeListener = require('socket.io')(httpsServer);
 
 // object to store desktop sockets
 let desktopSocket = null;
+let mobileSocket = null;
 
 // the socket can be a phone or a desktop
 realtimeListener.on('connection', function (socket) {
@@ -60,12 +61,21 @@ realtimeListener.on('connection', function (socket) {
 	    desktopSocket = socket;
     });
 
+    socket.on("crash", function () {
+        console.log("Crash");
+        if (mobileSocket) {
+            //avisa al movil para que vibre
+            mobileSocket.emit('crash');
+        }
+    });
+
     // receives a connect message from a phone
     socket.on("phone-connect", function () {
         console.log("Phone Connected");
         if (desktopSocket) {
             // ... informs desktop that a phone has connected
             desktopSocket.emit('phone-connect');
+            mobileSocket = socket;
         }
     });
 

@@ -1,4 +1,4 @@
-import {setupSockets} from "./sockets.js";
+import {setupSockets, crash} from "./sockets.js";
 // main.js hay que importarlo con type=”module”.
 // podeis crear otra funcion que llame a setupSockets, lo pongo asi para simplificar
 window.onload = setupSockets; 
@@ -34,21 +34,34 @@ function pulsar(tecla){
     switch(tecla.key){
 
         case "ArrowLeft":
-            if(x>0)
+            if(x>0){
                 x=Math.max(0,x-speed);
+            }else{
+                crash();
+            }
             break;//izquierda
         case "ArrowUp":
-            if(y>0)
-               y=Math.max(0, y-speed);       
+            if(y>0){
+               y=Math.max(0, y-speed); 
+            }else{
+                crash();
+            }      
             break;  
         case "ArrowRight":
             //if(x+27<476)
-            if(x+window_w<img_w)
+            if(x+window_w<img_w){
               x=Math.min(img_w-window_w-1, x+speed);
+            }else{
+                crash();
+            }
             break;
         case "ArrowDown":
-            if(y+window_h<img_h)
+            if(y+window_h<img_h){
                y=Math.min(img_h-window_h-1, y+speed);
+            }else{
+                crash();
+            }
+
             break;
     }     
     
