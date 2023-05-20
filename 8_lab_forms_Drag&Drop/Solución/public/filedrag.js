@@ -27,7 +27,7 @@ function fileSelectHandler(e) {
 
 	// files can be added by drag&drop or clicking on form's button
 	// if the later, append files to form files field 
-	var formFiles = documento.getElementById("upload").fileselect;
+	var formFiles = document.getElementById("upload").fileselect;
 	if (formFiles.files.length == 0){
 		formFiles.files = files;
 	}
