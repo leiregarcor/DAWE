@@ -139,18 +139,20 @@ var ladrillos = [
 
 
 var createBricks = function(){
-	     // TU CÓDIGO AQUÍ
-   	for (var i = ladrillos.length - 1; i >= 0; i--){ //por cada elemento del JSON se crea un ladrillo nuevo
-      var ladrillo = new Brick(ladrillos[i].x, ladrillos[i].y, ladrillos[i].c);
-      bricks.push(ladrillo);
-    }
+	     // TU CÓDIGO AQUÍ    
+     ladrillos.forEach((ladrillo) => {
+      var brick = new Brick(ladrillo.x, ladrillo.y, ladrillo.c);      
+      bricks.push(brick);    
+      console.log(brick);
+      
+    });
 }
 
 var drawBricks = function(){
 	     // TU CÓDIGO AQUÍ
    	for (var i = bricks.length - 1; i >= 0; i--) {
     	var brick = bricks[i];
-     	brick.draw();
+     	brick.draw(ctx);
     }
 };
 
