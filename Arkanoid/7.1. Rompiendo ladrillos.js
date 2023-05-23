@@ -10,8 +10,7 @@ var ANCHURA_LADRILLO = 20, ALTURA_LADRILLO = 10;
 
 // var frames = 30;
 //[JOAO] función traída del enunciado 7.1
-function intersects(left, up, right, bottom, cx, cy, radius )
-{
+function intersects(left, up, right, bottom, cx, cy, radius ){
   var closestX = (cx < left ? left : (cx > right ? right : cx));
   var closestY = (cy < up ? up : (cy > bottom ? bottom : cy));
   var dx = closestX - cx;
@@ -58,18 +57,29 @@ function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
 }
 function testCollisionWithWalls(ball, w, h) {
   // TU CÓDIGO AQUÍ
-  //x e y +6
   var ret = false
-  if(ball.x-ball.radius < 0 || ball.x+ball.radius > w){
-    ball.angle = -ball.angle + Math.PI
-    console.log("CASO 1")
-  }else	if(ball.y+ball.radius > h){
+  //cuando hay colisión hay que redibujar la bola dentro del margen
+  if(ball.x+ball.radius > w){
+    //margen derecha
+    ball.angle = -ball.angle + Math.PI;
+    ball.x= w -ball.radius;
+    //console.log("CASO 1")
+  }else	if(ball.x-ball.radius < 0 ){
+    //margen izquierda
+    ball.angle = -ball.angle + Math.PI;
+    ball.x= ball.radius; 
+  }
+  else	if(ball.y+ball.radius > h){
+     //devuele true si ha tocado el margen inferior
     ball.angle = -ball.angle;
-    console.log("CASO 2")
+    ball.y = h - ball.radius;
+    //console.log("CASO 2")
     ret = true;
   }else if(ball.y-ball.radius < 0){
+    //margen superior
     ball.angle = -ball.angle;
-    console.log("CASO 3")
+    ball.y = ball.radius;
+    //console.log("CASO 3")
   }
   return ret;
 }
@@ -158,10 +168,14 @@ var GF = function() {
 
   var balls = [];
   var bricks = [];
-  var bricksLeft = 0;
+  //inicializar bricksLeft
+  var bricksLeft = 0;  
+  //var bricksLeft;
+
 
   // vars for handling inputs
-  var inputStates = {};
+  //inicializar a false
+  var inputStates = {right:'False', left:'False', space:'False'};
 
 
   var ladrillos = [
@@ -170,17 +184,58 @@ var GF = function() {
     // red
     {x:20,y:42,c:'red'}, {x:20*2+ANCHURA_LADRILLO,y:42,c:'red'},{x:20*3+ANCHURA_LADRILLO*2,y:42,c:'red'},{x:20*4+ANCHURA_LADRILLO*3,y:42,c:'red'}, {x:20*5+ANCHURA_LADRILLO*4,y:42,c:'red'} ];
 
+  function inicializarGestores(){
+    //FUNCION PARA INICIALIZAR LOS GESTORES DEL TECLADO keyup y keydomw
+
+    // Crea un listener para gestionar la pulsación
+    // de izquierda, derecha o espacio
+    // y actualiza inputStates.left .right o .space
+    // el listener será para keydown (pulsar)
+    // y otro para keyup
+
+    document.onkeydown = function pulsar(tecla){
+      tecla.preventDefault();
+      switch(tecla.code){
+        case "ArrowLeft":
+          inputStates.left = 'True';
+          break;//izquierda
+        case "ArrowRight":
+          //if(x+27<476)
+          inputStates.right = 'True';
+          break;
+        case "Space":
+          inputStates.space = 'True';
+          break;
+      }
+    }
+    document.onkeyup = function pulsar(tecla){
+      tecla.preventDefault();
+      switch(tecla.code){
+        case "ArrowLeft":
+          inputStates.left = 'False';
+          break;//izquierda
+        case "ArrowRight":
+          //if(x+27<476)
+          inputStates.right = 'False';
+          break;
+        case "Space":
+          inputStates.space = 'False';
+          break;
+      }
+    }
+  }
+
 
   var createBricks = function(){
     // TU CÓDIGO AQUÍ
     ladrillos.forEach((ladrillo) => {
       var brick = new Brick(ladrillo.x, ladrillo.y, ladrillo.c);
+      // añade un ladrillo al array de ladrillos
       bricks.push(brick);
       //[JOAO] - 7.1 - Incremento de la cantidad de bricks
-      bricksLeft++
+      bricksLeft++;
       console.log(brick);
       console.log("bricksLeft: " + bricksLeft);
-
 
     });
   }
@@ -236,24 +291,49 @@ var GF = function() {
     // por lo que un rebote contra un ladrillo es exactamente igual
     // En caso de colisión bola-ladrillo, elimina del array bricks
     // el ladrillo correspondiente
-    bricks.forEach((ladrillos) => {
-      var aux = intersects(ladrillos.x,ladrillos.y, (ALTURA_LADRILLO),(ANCHURA_LADRILLO),ball.x,ball.y,ball.radius)
+    bricks.forEach((ladrillo) => {
+      var aux = intersects(ladrillo.x,ladrillo.y,(ladrillo.x+ANCHURA_LADRILLO),(ladrillo.y+ALTURA_LADRILLO), ball.x,ball.y,ball.radius);
+      /*
+       * ladrillo.x = coordenada erpin izq x
+       * ladrillo.y = coordenada erpin izq y
+       * ladrillo.x+ANCHURA_LADRILLO = coordenada erpin dcho x
+       * ladrillo.y+ALTURA_LADRILLO = coordenada erpin dch y
+       * ball.x = coordenada x del centro de la bola
+       * ball.y = coordenada y del centro de la bola
+       * ball.radius = radio de la bola
+       */
       if (aux.c){
-        var bricksLeft = []
-        ball.speed++;
-        //Cambio de angulo:
-        if(aux.d=="right" || aux.d=="left"){
-          ball.angle = -ball.angle + Math.PI
-        }else	if(aux.d=="top"){
+        //si la bola alcanza un ladrillo
+        //Cambio de angulo segun lado del ladrillo:
+        if(aux.d=="right"){
+          ball.angle = -ball.angle + Math.PI;
+				  ball.x = ladrillo.x + ANCHURA_LADRILLO + ball.radius; //estando a la derecha-> la nueva coordenada x es= la coordenada del lado derecho del ladrillo + (radio) el ancho de la bola hasta el centro
+        }else if ( aux.d=="left") {
+          ball.angle = -ball.angle + Math.PI;          
+				  ball.x = ladrillo.x - ball.radius;
+        }
+        else	if(aux.d=="top"){
           ball.angle = -ball.angle;
+				  ball.y = ladrillo.y - ball.radius;
         }else if(aux.d=="botton"){
           ball.angle = -ball.angle;
+          //no queremos que la se dibuje dentro del ladrillo
+				  ball.y = ladrillo.y + ALTURA_LADRILLO + ball.radius;
         }
+        //para eliminar el ladrillo hay que usar el metodo del array scplice, pero hace falta saber el indice del ladrillo
+        //sintaxis-> array.splice(start[, deleteCount[, item1[, item2[, ...]]]]), es decir desde que indice se elimina y hasta que índice
+        //estoy dando por hecho que el indice nunca va a dar negativo porque bricks va a tener elementos, si no no entraría en el foreach
+        bricks.splice(bricks.indexOf(ladrillo),1);
+        ball.speed++;        
+        //restamos los ladrillos restantes
+        bricksLeft--;
       }
+
+
     });
 
 
-
+    //falta el return
     // devuelve el número de ladrillos que quedan
   }
 
@@ -300,13 +380,16 @@ var GF = function() {
       // TU CÓDIGO AQUÍ
       // Test para comprobar colisión entre Vaus y la bola
       if(circRectsOverlap(x, y, vausWidth, vausHeight, ball.x, ball.y, ball.radius)){
+        //se redibuja la bola para que no quede encerrada en el vaus
         ball.y = y - ball.radius; //es una resta porque la esquina superior es 0
         ball.angle = -ball.angle;
       }
 
       //[JOAO] 7.1 NUEVO
       // test if ball collides with any brick
-      bricksLeft = testBrickCollision(ball);
+      //bricksLeft = testBrickCollision(ball);
+      //no hace falta devolverlo porque ya se guarda como variable global
+      testBrickCollision(ball);
 
       // TU CÓDIGO AQUÍ
       // Test if the paddle collides
@@ -349,45 +432,10 @@ var GF = function() {
     fpsContainer = document.createElement('div');
     document.body.appendChild(fpsContainer);
 
-    // TU CÓDIGO AQUÍ
-// Crea un listener para gestionar la pulsación
-// de izquierda, derecha o espacio
-// y actualiza inputStates.left .right o .space
-// el listener será para keydown (pulsar)
-// y otro para keyup
-    inputStates.right = 'False';
-    inputStates.left = 'False';
-    inputStates.space = 'False';
-    document.onkeydown = function pulsar(tecla){
-      tecla.preventDefault();
-      switch(tecla.code){
-        case "ArrowLeft":
-          inputStates.left = 'True';
-          break;//izquierda
-        case "ArrowRight":
-          //if(x+27<476)
-          inputStates.right = 'True';
-          break;
-        case "Space":
-          inputStates.space = 'True';
-          break;
-      }
-    }
-    document.onkeyup = function pulsar(tecla){
-      tecla.preventDefault();
-      switch(tecla.code){
-        case "ArrowLeft":
-          inputStates.left = 'False';
-          break;//izquierda
-        case "ArrowRight":
-          //if(x+27<476)
-          inputStates.right = 'False';
-          break;
-        case "Space":
-          inputStates.space = 'False';
-          break;
-      }
-    }
+  // TU CÓDIGO AQUÍ
+  // Crea un listener para gestionar la pulsación de izquierda, derecha o espacio
+  inicializarGestores();
+
 
 // TU CÓDIGO AQUÍ
 // Instancia una bola con los parámetros del enunciado e introdúcela en el array balls

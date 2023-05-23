@@ -34,6 +34,7 @@ var ANCHURA_LADRILLO = 20, ALTURA_LADRILLO = 10;
         if(ball.x-ball.radius < 0 || ball.x+ball.radius > w){
         	ball.angle = -ball.angle + Math.PI;
         }else	if(ball.y+ball.radius > h){
+          //devuele true si ha tocado el margen inferior
           ball.angle = -ball.angle;
           ret = true;
         }else if(ball.y-ball.radius < 0){
