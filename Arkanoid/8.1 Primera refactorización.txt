@@ -3,8 +3,8 @@ var canvas = document.querySelector("canvas");
 var ctx = canvas.getContext("2d");
 var w = canvas.width;
 var h = canvas.height;
-var x = 130,
-  y = 135; // posición inicial de Vaus
+// var x = 130,
+//  y = 135; // posición inicial de Vaus
 var delta;
 var ANCHURA_LADRILLO = 20,
   ALTURA_LADRILLO = 10;
@@ -60,7 +60,8 @@ function circRectsOverlap(x0, y0, w0, h0, cx, cy, r) {
 }
 
 function testCollisionWithWalls(ball, w, h) {
-   // TU CÓDIGO AQUÍ
+     // TU CÓDIGO AQUÍ
+     // TU CÓDIGO AQUÍ
 	var ret = false
   //cuando hay colisión hay que redibujar la bola dentro del margen
   if(ball.x+ball.radius > w){
@@ -88,9 +89,9 @@ function testCollisionWithWalls(ball, w, h) {
   return ret;
 }
 
-function Brick(x,y,color) {
-  // TU CÓDIGO AQUÍ
-  this.x = x;
+function Brick(x, y, color) {
+    // TU CÓDIGO AQUÍ
+	this.x = x;
   this.y = y;
   this.color = color;
 }
@@ -114,8 +115,8 @@ var calcDistanceToMove = function(delta, speed) {
 
 
 function Ball(x, y, angle, v, diameter, sticky) {
-    // TU CÓDIGO AQUÍ
-	this.x = x;
+     // TU CÓDIGO AQUÍ
+  this.x = x;
   this.y = y;
   this.angle = angle;
   this.speed = v;
@@ -123,8 +124,9 @@ function Ball(x, y, angle, v, diameter, sticky) {
   this.sticky = sticky;
 
   this.draw = function(ctx) {
-    // TU CÓDIGO AQUÍ
-    ctx.beginPath();
+
+      // TU CÓDIGO AQUÍ
+		ctx.beginPath();
     ctx.fillStyle = '#008000';
     ctx.lineWidth = 2;
 
@@ -135,8 +137,8 @@ function Ball(x, y, angle, v, diameter, sticky) {
   };
 
   this.move = function(x, y) {
-    // TU CÓDIGO AQUÍ
-    if(x != undefined && y != undefined){
+      // TU CÓDIGO AQUÍ
+		if(x != undefined && y != undefined){
       this.x = x;
       this.y = y;
     }
@@ -166,19 +168,28 @@ var GF = function() {
   var fpsContainer;
   var fps, oldTime = 0;
 
-  var speed = 300; // px/s 
-  var vausWidth = 30,
-    vausHeight = 10;
+//  var speed = 300; // px/s 
+//  var vausWidth = 30,   vausHeight = 10;
 
   var balls = [];
   var bricks = [];
-  //var bricksLeft;
   var bricksLeft = 0;
-  // TU CÓDIGO AQUí
-  // declara e inicializa una variable lifes
-	var lifes = 3;
+  
+  var lifes = 3;
+
   // vars for handling inputs
   var inputStates = {right:'False', left:'False', space:'False'};
+
+  // NUEVO: VAUS en objeto literal 
+    var paddle = {
+        dead: false,
+        x: 130,
+        y: 135,
+        width: 32,
+        height: 8,
+        speed: 300, // pixels/s 
+      	sticky: false
+    };
 
 
   var ladrillos = [
@@ -268,7 +279,7 @@ var GF = function() {
       }
     }
   } 
-
+  
   var createBricks = function() {
      // TU CÓDIGO AQUÍ
      ladrillos.forEach((ladrillo) => {
@@ -278,17 +289,16 @@ var GF = function() {
       //[JOAO] - 7.1 - Incremento de la cantidad de bricks
       bricksLeft++;
       //console.log("bricksLeft: " + bricksLeft);
-
-    });
-   }
-   
+      });
+    }
+    
   var drawBricks = function() {
    // TU CÓDIGO AQUÍ
- 		for (var i = bricks.length - 1; i >= 0; i--) {
+   for (var i = bricks.length - 1; i >= 0; i--) {
       var brick = bricks[i];
       brick.draw(ctx);
     }
- 	};
+  };
 
   var measureFPS = function(newTime) {
 
@@ -323,17 +333,17 @@ var GF = function() {
 
   // TU CÓDIGO AQUÍ
   function testBrickCollision(ball) {
-    // TU CÓDIGO AQUÍ
-    // Para cada ladrillo
-    // comprobar si hay intersección entre bola y ladrillo
-    // si la hay, incrementar la velocidad de la bola
-    // y rebotar la bola consecuentemente
-    // recuerda que ya has implementado un rebote de bola contra
-    // cualquiera de las paredes (left, right, top, bottom)
-    // por lo que un rebote contra un ladrillo es exactamente igual
-    // En caso de colisión bola-ladrillo, elimina del array bricks
-    // el ladrillo correspondiente
-    // TU CÓDIGO AQUÍ
+  // TU CÓDIGO AQUÍ
+  // Para cada ladrillo
+	 	 	// comprobar si hay intersección entre bola y ladrillo
+ 	 		// si la hay, incrementar la velocidad de la bola
+ 	 		// y rebotar la bola consecuentemente
+ 	 		// recuerda que ya has implementado un rebote de bola contra
+ 	 		// cualquiera de las paredes (left, right, top, bottom)
+ 	 		// por lo que un rebote contra un ladrillo es exactamente igual
+ 		  // En caso de colisión bola-ladrillo, elimina del array bricks
+ 	  	// el ladrillo correspondiente
+		// TU CÓDIGO AQUÍ
 	   bricks.forEach((ladrillo) => {
 		    var aux = intersects(ladrillo.x,ladrillo.y,(ladrillo.x+ANCHURA_LADRILLO),(ladrillo.y+ALTURA_LADRILLO), ball.x,ball.y,ball.radius);
       /*
@@ -381,37 +391,44 @@ var GF = function() {
   // Función para pintar la raqueta Vaus
   function drawVaus(x, y) {
 
-    // TU CÓDIGO AQUÍ
-		//clearRect(0, 0, w, h);
+  // TU CÓDIGO AQUÍ
+  //clearRect(0, 0, w, h);
     ctx.beginPath();
     ctx.fillStyle = '#000';
     // Dibujar el rectángulo
-    ctx.fillRect(x,y, vausWidth, vausHeight); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
+    ctx.fillRect(x,y, paddle.width, paddle.height); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
   }
-
+	
+  	function createBallInicial(ctx){
+    	var bola_inicial = new Ball(50, 70, Math.PI/3, 30, 12, 'False');
+    	balls.push(bola_inicial);
+    	bola_inicial.draw(ctx);
+    }
+  
     function displayLifes() {
     // TU CÓDIGO AQUÍ
-        // Muestra en la esquina superior derecha, en rojo, el número de vidas que quedan
+    // Muestra en la esquina superior derecha, en rojo, el número de vidas que quedan
         // por ejemplo, Lifes: 3
     	ctx.fillStyle = "red";
     	ctx.font = "bold 10px Arial";
     	ctx.fillText(`Lifes: ${lifes}`, 190, 10);
+      
     }
     
   var updatePaddlePosition = function() {
 
 
-    var incX = Math.ceil(calcDistanceToMove(delta, speed));
+    var incX = Math.ceil(calcDistanceToMove(delta, paddle.speed));
 
-   // TU CÓDIGO AQUÍ
-		if (inputStates.left == 'True'){
-      if (x > 0) {
-        x-= incX;
+    // TU CÓDIGO AQUÍ : NUEVO: USA LOS ATRIBUTOS DE PADDLE
+    if (inputStates.left == 'True'){
+      if (paddle.x > 0) {
+        paddle.x-= incX;
       }
     }
     if (inputStates.right == 'True'){
-      if (x + vausWidth < w) {
-        x += incX;
+      if (paddle.x + paddle.width < w) {
+        paddle.x += incX;
       }
     }
     if (inputStates.space == 'True'){
@@ -426,31 +443,34 @@ var GF = function() {
       ball.move();
 
       var die = testCollisionWithWalls(ball, w, h);
+
+      // TU CÓDIGO AQUÍ
+      // Nuevo: gestiona la pérdida de una bola usando los atributos de paddle
       if(die){
       	balls.pop();
         console.log(balls.length);
 				if(balls.length < 1){ //si es la última bola
         	lifes --;
+          paddle.dead = 'True';
         }
-        
       }
-      
       // TU CÓDIGO AQUÍ
        // si la bola ha caído por la parte inferior
        // eliminarla del array de bolas
        // Si no quedan bolas --> una vida menos
-      if(circRectsOverlap(x, y, vausWidth, vausHeight, ball.x, ball.y, ball.radius)){
+      if(circRectsOverlap(paddle.x, paddle.y, paddle.width, paddle.height, ball.x, ball.y, ball.radius)){
         //se redibuja la bola para que no quede encerrada en el vaus
-        ball.y = y - ball.radius; //es una resta porque la esquina superior es 0
+        ball.y = paddle.y - ball.radius; //es una resta porque la esquina superior es 0
         ball.angle = -ball.angle;
       }
-      
+      // NUEVO
       // test if ball collides with any brick
-				testBrickCollision(ball);
+      bricksLeft = testBrickCollision(ball);
 
       // TU CÓDIGO AQUÍ
       // Test if the paddle collides
-      
+      // NUEVO: Gestiona el rebote de la bola con Vaus usando los atributos de paddle
+
       ball.draw(ctx);
     }
   }
@@ -475,17 +495,22 @@ var GF = function() {
     updatePaddlePosition();
 
     updateBalls();
-
+		
+    if(paddle.dead == 'True' && lifes > 0){
+    	createBallInicial(ctx);
+      paddle.dead = 'False';
+    }
     // draw Vaus
-    drawVaus(x, y);
+    // NUEVO: fíjate que ahora usamos paddle.x y paddle.y
+    drawVaus(paddle.x, paddle.y);
 
     // dibujar ladrillos
     drawBricks();
-    
-    // TU CÓDIGO AQUí
-    // Llama al método que pinta las vidas en pantalla
-    displayLifes();
-    // call the animation loop every 1/60th of second
+
+    // TU CÓDIGO AQUÍ
+    // Mostrar vidas
+		displayLifes();
+   // call the animation loop every 1/60th of second
     requestAnimationFrame(mainLoop);
   };
 
@@ -500,13 +525,11 @@ var GF = function() {
 // y actualiza inputStates.left .right o .space 
 // el listener será para keydown (pulsar)
 // y otro para keyup
-		 inicializarGestores();
+		inicializarGestores();
   
 // TU CÓDIGO AQUÍ
 // Instancia una bola con los parámetros del enunciado e introdúcela en el array balls
-		var bola_inicial = new Ball(50, 70, Math.PI/3, 30, 12, 'False');
-    balls.push(bola_inicial);
-    bola_inicial.draw(ctx);
+		createBallInicial(ctx);
 
     createBricks();
 
@@ -519,10 +542,15 @@ var GF = function() {
    setTimeout(function() {
     assert.ok(lifes < 3, "Passed!");
     done();
-  }, 10000);
+  }, 10000);  
+  
 });
 
-    
+test('Comprobar paddle.dead', function(assert) {
+    assert.ok(paddle.dead == true, "Passed!");
+});
+
+  
   };
 
   //our GameFramework returns a public API visible from outside its scope
@@ -530,7 +558,6 @@ var GF = function() {
     start: start
   };
 }
-
 var game = new GF();
 game.start();
 
