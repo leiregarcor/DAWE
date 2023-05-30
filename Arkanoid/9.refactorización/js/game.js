@@ -250,6 +250,12 @@ var GF = function() {
     }
   ];
 
+ function initTerrain() {
+    //sprites del fondo de color    
+    terrain = new Sprite('img/sprites.png', [190,130], [30, 30]);    
+    terrainPattern =  ctx.createPattern ( terrain.image(), 'repeat') ;  // repeat forma un mosaico con el fondo
+  }
+
 	function inicializarGestores(){
     //FUNCION PARA INICIALIZAR LOS GESTORES DEL TECLADO keyup y keydomw
 
@@ -401,7 +407,6 @@ var GF = function() {
 
   // Función para pintar la raqueta Vaus
   function drawVaus(x, y) {
-
     // TU CÓDIGO AQUÍ
     //clearRect(0, 0, w, h);
     //ctx.beginPath();
@@ -559,6 +564,8 @@ var GF = function() {
   };
 
   var start = function() {
+    //initTerrain();
+
     // adds a div for displaying the fps value
     fpsContainer = document.createElement('div');
     document.body.appendChild(fpsContainer);
@@ -576,11 +583,11 @@ var GF = function() {
     		'img/sprites.png'
         ]);
         resources.onReady(GF);
-  
-// TU CÓDIGO AQUÍ
-// Instancia una bola con los parámetros del enunciado e introdúcela en el array balls
-	createBallInicial(ctx);
-    createBricks();
+        
+        // TU CÓDIGO AQUÍ
+        // Instancia una bola con los parámetros del enunciado e introdúcela en el array balls
+        createBallInicial(ctx);
+        createBricks();
 
     // start the animation
     requestAnimationFrame(mainLoop);
