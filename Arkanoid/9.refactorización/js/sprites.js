@@ -17,7 +17,7 @@
         },
 
         _render: function() {
-	    var frame;
+            var frame;
 
             if(this.speed > 0) {
                 var max = this.frames.length;
@@ -44,32 +44,32 @@
                 x += frame * this.size[0];
             }
 
-		return {x: x, y:y};
+            return {x: x, y:y};
 
-		 },
-
-        render: function(ctx) {
-        	var pos = this._render();
-	    		ctx.drawImage(resources.get(this.url),
-                          pos.x, pos.y,
-                          this.size[0], this.size[1],
-                          0, 0,
-                          this.size[0], this.size[1]);
         },
 
-	image: function() {
-		var pos = this._render();
-		var pattern_canvas = document.createElement('canvas');
-		pattern_canvas.width = this.size[0];
-		pattern_canvas.height = this.size[1];
-		var pattern_context = pattern_canvas.getContext('2d');
-			pattern_context.drawImage(resources.get(this.url),
-                          pos.x, pos.y,
-                          this.size[0], this.size[1],
-                          0, 0,
-                          this.size[0], this.size[1]);
-		return pattern_canvas;
-	       }
+        render: function(ctx) {
+            var pos = this._render();
+            ctx.drawImage(resources.get(this.url),
+                pos.x, pos.y,
+                this.size[0], this.size[1],
+                0, 0,
+                this.size[0], this.size[1]);
+        },
+
+        image: function() {
+            var pos = this._render();
+            var pattern_canvas = document.createElement('canvas');
+            pattern_canvas.width = this.size[0];
+            pattern_canvas.height = this.size[1];
+            var pattern_context = pattern_canvas.getContext('2d');
+            pattern_context.drawImage(resources.get(this.url),
+                pos.x, pos.y,
+                this.size[0], this.size[1],
+                0, 0,
+                this.size[0], this.size[1]);
+            return pattern_canvas;
+        }
     };
 
     window.Sprite = Sprite;

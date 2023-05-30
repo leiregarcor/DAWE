@@ -6,8 +6,14 @@ var h = canvas.height;
 // var x = 130,
 //  y = 135; // posición inicial de Vaus
 var delta;
-var ANCHURA_LADRILLO = 20,
-  ALTURA_LADRILLO = 10;
+var ANCHURA_LADRILLO = 15,
+  ALTURA_LADRILLO = 7;
+
+//Cood de los colores de los ladrillos
+coords = {
+    "red": [16,8],
+    "grey": [32,0]
+}
 
 // var frames = 30;
 
@@ -65,21 +71,25 @@ function testCollisionWithWalls(ball, w, h) {
   //cuando hay colisión hay que redibujar la bola dentro del margen
   if(ball.x+ball.radius > w){
     //margen derecha
+      sonidos.play("choqueVaus")
     ball.angle = -ball.angle + Math.PI;
     ball.x= w -ball.radius;
     //console.log("CASO 1")
   }else	if(ball.x-ball.radius < 0 ){
+     sonidos.play("choqueVaus")
     //margen izquierda
     ball.angle = -ball.angle + Math.PI;
     ball.x= ball.radius; 
   }
   else	if(ball.y+ball.radius > h){
+     sonidos.play("choqueVaus")
      //devuele true si ha tocado el margen inferior
     ball.angle = -ball.angle;
     ball.y = h - ball.radius;
     //console.log("CASO 2")
     ret = true;
   }else if(ball.y-ball.radius < 0){
+     sonidos.play("choqueVaus")
     //margen superior
     ball.angle = -ball.angle;
     ball.y = ball.radius;
@@ -91,18 +101,23 @@ function testCollisionWithWalls(ball, w, h) {
 
 function Brick(x, y, color) {
       // TU CÓDIGO AQUÍ
-	this.x = x;
-  this.y = y;
-  this.color = color;
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.sprite = new Sprite('img/sprites.png', coords[color], [ANCHURA_LADRILLO,ALTURA_LADRILLO]);
 }
 
 Brick.prototype = {
   draw: function(ctx) {
        // TU CÓDIGO AQUÍ
-		ctx.beginPath();
-    ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    //ctx.fillStyle = this.color;
     // Dibujar el rectángulo
-    ctx.fillRect(this.x, this.y, ANCHURA_LADRILLO, ALTURA_LADRILLO); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
+    //ctx.fillRect(this.x, this.y, ANCHURA_LADRILLO, ALTURA_LADRILLO); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      this.sprite.render(ctx);
+      ctx.restore();
   }
 };
 
@@ -154,10 +169,33 @@ function Ball(x, y, angle, v, diameter, sticky) {
 // Inits
 window.onload = function init() {
   var game = new GF();
-  game.start();
+  //Para cuando cargue los audios, se inicialice la partida
+  loadAssets(game.start);
 };
 
+function loadAssets(callback) {
+    // Cargar sonido asíncronamente usando howler.js
+    music = new Howl({
+        urls: ['audio/Game_Start.ogg'], volume: 1,
+        onload: function () {
+            callback();
+        }
+    });
 
+    sonidos = new Howl({
+        urls: ['audio/sounds.mp3'], volume: 1,
+        sprite : {
+            choqueVaus: [0,700],
+            salir: [1000,1700],
+            empezar: [3000,2700],
+            movimiento: [5000,500],
+            point: [1400,700]
+        },
+        onload: function () {
+            callback();
+        }
+    });
+}// new Howl
 // GAME FRAMEWORK STARTS HERE
 var GF = function() {
 
@@ -251,9 +289,10 @@ var GF = function() {
   ];
 
  function initTerrain() {
-    //sprites del fondo de color    
-    terrain = new Sprite('img/sprites.png', [190,130], [30, 30]);    
-    terrainPattern =  ctx.createPattern ( terrain.image(), 'repeat') ;  // repeat forma un mosaico con el fondo
+    //sprites del fondo de color
+     //var ctx = canvas.getContext("2d");
+    terrain = new Sprite('img/sprites.png', [192,130], [30, 30], 16, [0,1])
+     terrainPattern =  ctx.createPattern ( terrain.image(), 'repeat') ;  // repeat forma un mosaico con el fondo
   }
 
 	function inicializarGestores(){
@@ -270,10 +309,12 @@ var GF = function() {
       switch(tecla.code){
         case "ArrowLeft":
           inputStates.left = 'True';
+          sonidos.play("movimiento")
           break;//izquierda
         case "ArrowRight":
           //if(x+27<476)
           inputStates.right = 'True';
+          sonidos.play("movimiento")
           break;
         case "Space":
           inputStates.space = 'True';
@@ -344,8 +385,9 @@ var GF = function() {
   // clears the canvas content
   function clearCanvas() {
     ctx.clearRect(0, 0, w, h);
-    // ctx.fillStyle = 'green';
-    // ctx.fillRect(15,15,4,4);    
+    //Se añade el estilo de la hoja de sprite
+    ctx.fillStyle = terrainPattern;
+    ctx.fillRect(0, 0, w, h);
   }
 
   
@@ -374,6 +416,7 @@ var GF = function() {
        */
 	 
 	    	if(aux.c) {
+              sonidos.play("point")
 	//si la bola alcanza un ladrillo
         //Cambio de angulo segun lado del ladrillo:
 	      	switch(aux.d) { // lado del choque
@@ -414,12 +457,14 @@ var GF = function() {
     // Dibujar el rectángulo
     //ctx.fillRect(x,y, paddle.width, paddle.height); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
     
-    //dibujar el sprite del vaus
+
+      //dibujar el sprite del vaus
     ctx.save();
     ctx.translate(x, y);
     paddle.sprite.render(ctx);
     ctx.restore();
   }
+
 	
   function createBallInicial(ctx){
     	var bola_inicial = new Ball(50, 70, Math.PI/3, 30, 12, 'False');
@@ -431,13 +476,12 @@ var GF = function() {
     // TU CÓDIGO AQUÍ
     	// Muestra en la esquina superior derecha, en rojo, el número de vidas que quedan
         // por ejemplo, Lifes: 3
-    	ctx.fillStyle = "red";
+    	ctx.fillStyle = "white";
     	ctx.font = "bold 10px Arial";
     	ctx.fillText(`Lifes: ${lifes}`, 190, 10);
     }
     
   var updatePaddlePosition = function() {
-
     //para el sprite del vaus
     paddle.sprite.update(delta);
 
@@ -482,6 +526,7 @@ var GF = function() {
        // Si no quedan bolas --> una vida menos
       if(circRectsOverlap(paddle.x, paddle.y, paddle.width, paddle.height, ball.x, ball.y, ball.radius)){
         //se redibuja la bola para que no quede encerrada en el vaus
+        sonidos.play("choqueVaus")
         ball.y = paddle.y - ball.radius; //es una resta porque la esquina superior es 0
         ball.angle = -ball.angle;
       }
@@ -504,6 +549,7 @@ var GF = function() {
 
   }
   var mainLoop = function(time) {
+     initTerrain()
     //main function, called each frame 
     measureFPS(time);
 
@@ -512,7 +558,6 @@ var GF = function() {
 
     // Clear the canvas
     clearCanvas();
-
     // TU CÓDIGO AQUÍ
     // NUEVO
     // Si se ha perdido una vida, comprobar si quedan más 
@@ -531,7 +576,7 @@ var GF = function() {
   // SI currentGameState = en ejecución
    // todo sigue como antes: 
    	if(currentGameState == "gameRunning"){
-    // Mover Vaus de izquierda a derecha
+        // Mover Vaus de izquierda a derecha
       updatePaddlePosition();
 
       updateBalls();
@@ -545,6 +590,7 @@ var GF = function() {
       displayLifes();
 
       // call the animation loop every 1/60th of second
+
       requestAnimationFrame(mainLoop);
 	}
     // PERO Si currentGameState = GAME OVER
@@ -564,7 +610,6 @@ var GF = function() {
   };
 
   var start = function() {
-    //initTerrain();
 
     // adds a div for displaying the fps value
     fpsContainer = document.createElement('div');
@@ -583,12 +628,14 @@ var GF = function() {
     		'img/sprites.png'
         ]);
         resources.onReady(GF);
-        
-        // TU CÓDIGO AQUÍ
+
+
+      // TU CÓDIGO AQUÍ
         // Instancia una bola con los parámetros del enunciado e introdúcela en el array balls
         createBallInicial(ctx);
         createBricks();
-
+        //Empezar la musica
+      music.play()
     // start the animation
     requestAnimationFrame(mainLoop);
     
