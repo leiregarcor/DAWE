@@ -167,8 +167,8 @@ var GF = function() {
   var fpsContainer;
   var fps, oldTime = 0;
 
-//  var speed = 300; // px/s 
-//  var vausWidth = 30,   vausHeight = 10;
+    //  var speed = 300; // px/s 
+    //  var vausWidth = 30,   vausHeight = 10;
 
   var balls = [];
   var bricks = [];
@@ -197,7 +197,8 @@ var GF = function() {
         width: 32,
         height: 8,
         speed: 300, // pixels/s 
-      	sticky: false
+      	sticky: false,
+        sprite: new Sprite('img/sprites.png', [224,40], [32,8], 16, [0,1])        
     };
 
 
@@ -403,10 +404,16 @@ var GF = function() {
 
     // TU CÓDIGO AQUÍ
     //clearRect(0, 0, w, h);
-    ctx.beginPath();
-    ctx.fillStyle = '#000';
+    //ctx.beginPath();
+    //ctx.fillStyle = '#000';
     // Dibujar el rectángulo
-    ctx.fillRect(x,y, paddle.width, paddle.height); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
+    //ctx.fillRect(x,y, paddle.width, paddle.height); // Posición (x, y) y tamaño (ancho, alto) del rectángulo
+    
+    //dibujar el sprite del vaus
+    ctx.save();
+    ctx.translate(x, y);
+    paddle.sprite.render(ctx);
+    ctx.restore();
   }
 	
   function createBallInicial(ctx){
@@ -426,6 +433,8 @@ var GF = function() {
     
   var updatePaddlePosition = function() {
 
+    //para el sprite del vaus
+    paddle.sprite.update(delta);
 
     var incX = Math.ceil(calcDistanceToMove(delta, paddle.speed));
   // TU CÓDIGO AQUÍ
@@ -532,16 +541,16 @@ var GF = function() {
 
       // call the animation loop every 1/60th of second
       requestAnimationFrame(mainLoop);
-		}
+	}
     // PERO Si currentGameState = GAME OVER
     // PINTAR la pantalla de negro y escribir GAME OVER  
-		else if(currentGameState == "gameOver"){
-    	clearCanvas();
+	else if(currentGameState == "gameOver"){
+      clearCanvas();
       ctx.fillStyle = "black";
       ctx.beginPath();
       ctx.fillRect(0,0,w,h);
       ctx.fill();
-      //
+      
       ctx.fillStyle = "white";
       ctx.font = "bold 30px Arial";
       ctx.fillText("GAME OVER", (w/2)-95,(h/2)+10);
@@ -561,10 +570,16 @@ var GF = function() {
 // el listener será para keydown (pulsar)
 // y otro para keyup
 		inicializarGestores();
+
+        //cargar sprites desde imagen
+        resources.load([
+    		'img/sprites.png'
+        ]);
+        resources.onReady(GF);
   
 // TU CÓDIGO AQUÍ
 // Instancia una bola con los parámetros del enunciado e introdúcela en el array balls
-		createBallInicial(ctx);
+	createBallInicial(ctx);
     createBricks();
 
     // start the animation
