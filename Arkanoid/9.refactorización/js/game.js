@@ -74,7 +74,6 @@ function testCollisionWithWalls(ball, w, h) {
       sonidos.play("choqueVaus")
     ball.angle = -ball.angle + Math.PI;
     ball.x= w -ball.radius;
-    //console.log("CASO 1")
   }else	if(ball.x-ball.radius < 0 ){
      sonidos.play("choqueVaus")
     //margen izquierda
@@ -86,14 +85,12 @@ function testCollisionWithWalls(ball, w, h) {
      //devuele true si ha tocado el margen inferior
     ball.angle = -ball.angle;
     ball.y = h - ball.radius;
-    //console.log("CASO 2")
     ret = true;
   }else if(ball.y-ball.radius < 0){
      sonidos.play("choqueVaus")
     //margen superior
     ball.angle = -ball.angle;
     ball.y = ball.radius;
-    //console.log("CASO 3")
   }
   return ret;
 
@@ -122,7 +119,6 @@ Brick.prototype = {
 };
 
 
-// función auxiliar
 var calcDistanceToMove = function(delta, speed) {
      // TU CÓDIGO AQUÍ
 	return ((speed * delta) / 1000)
@@ -290,9 +286,8 @@ var GF = function() {
 
  function initTerrain() {
     //sprites del fondo de color
-     //var ctx = canvas.getContext("2d");
     terrain = new Sprite('img/sprites.png', [192,130], [30, 30], 16, [0,1])
-     terrainPattern =  ctx.createPattern ( terrain.image(), 'repeat') ;  // repeat forma un mosaico con el fondo
+    terrainPattern =  ctx.createPattern ( terrain.image(), 'repeat') ;  // repeat forma un mosaico con el fondo
   }
 
 	function inicializarGestores(){
@@ -344,7 +339,6 @@ var GF = function() {
       var brick = new Brick(ladrillo.x, ladrillo.y, ladrillo.c);
       // añade un ladrillo al array de ladrillos
       bricks.push(brick);
-      //[JOAO] - 7.1 - Incremento de la cantidad de bricks
       bricksLeft++;
       //console.log("bricksLeft: " + bricksLeft);
       });
@@ -528,7 +522,18 @@ var GF = function() {
         //se redibuja la bola para que no quede encerrada en el vaus
         sonidos.play("choqueVaus")
         ball.y = paddle.y - ball.radius; //es una resta porque la esquina superior es 0
-        ball.angle = -ball.angle;
+        //modificacion 14 rebote con efecto
+        if (inputStates.right == 'True'){
+          console.log('inputstates right')
+          ball.angle = ball.angle * (ball.angle < 0 ? 0.5 : 1.5);
+        }else if (inputStates.left == 'True'){
+          console.log('inputstates left')
+          ball.angle = ball.angle * (ball.angle > 0 ? 0.5 : 1.5);
+        }else{
+          console.log('inputstates else')
+          ball.angle = -ball.angle; //--sustituimos esta linea por las siguientes
+        }
+        
       }
       // NUEVO
       // test if ball collides with any brick
